@@ -1,4 +1,4 @@
-import React, { ComponentProps, ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 
 interface PropsInterface extends ComponentProps<"button"> {
   children: ReactNode;
