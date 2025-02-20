@@ -1,12 +1,11 @@
-import IconButton from "@/components/icon-button";
-import { InputField, InputIcon, InputRoot } from "@/components/input";
-import { BadgeCheck, Copy, Link, Medal, MousePointerClick } from "lucide-react";
+import { BadgeCheck, Medal, MousePointerClick } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import bronzeMedal from "../../assets/bronze-medal.svg";
 import goldMedal from "../../assets/gold-medal.svg";
 import logo from "../../assets/logo.svg";
 import silverMedal from "../../assets/silver-medal.svg";
+import InviteLinkInput from "./components/invite-link-input";
 
 const Invite = () => {
   return (
@@ -35,17 +34,7 @@ const Invite = () => {
             </p>
           </div>
 
-          <InputRoot>
-            <InputIcon>
-              <Link className="size-5" />
-            </InputIcon>
-
-            <InputField readOnly defaultValue="https://www.github.com/" />
-
-            <IconButton className="-mr-2">
-              <Copy className="size-5" />
-            </IconButton>
-          </InputRoot>
+          <InviteLinkInput />
 
           <div className="grid md:grid-cols-3 gap-3">
             <div className="relative bg-gray-700 border border-gray-600 px-4 py-7 flex flex-col items-center justify-center gap-1 rounded-xl">

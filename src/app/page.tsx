@@ -1,10 +1,19 @@
 import Button from "@/components/button";
 import { InputField, InputIcon, InputRoot } from "@/components/input";
+import {zodResolver} from "@hookform/resolvers/zod"
 import { ArrowRight, Mail, Radio, User } from "lucide-react";
 import Image from "next/image";
+import { useForm } from "react-hook-form";
+import {z} from "zod"
 import logo from "../assets/logo.svg";
 
 export default function Home() {
+  const {register, handleSubmit} = useForm();
+
+  const handleSubscribe(data: any) {
+
+  }
+
   return (
     <div className="min-h-dvh flex flex-col justify-center gap-16">
       <div className="flex flex-col gap-8 items-center md:items-start">
@@ -38,7 +47,7 @@ export default function Home() {
           </p>
         </div>
 
-        <form className="bg-gray-700 border border-gray-600 rounded-2xl p-8 space-y-6 w-full md:max-w-[440px]">
+        <form onSubmit={handleSubmit(handleSubscribe)} className="bg-gray-700 border border-gray-600 rounded-2xl p-8 space-y-6 w-full md:max-w-[440px]">
           <h2 className="font-heading font-semibold text-gray-200 text-xl">
             Inscrição
           </h2>
@@ -49,7 +58,7 @@ export default function Home() {
                 <User />
               </InputIcon>
 
-              <InputField type="text" placeholder="Nome completo" />
+              <InputField type="text" placeholder="Nome completo" {...register("name")}/>
             </InputRoot>
 
             <InputRoot>
@@ -57,7 +66,7 @@ export default function Home() {
                 <Mail />
               </InputIcon>
 
-              <InputField type="email" placeholder="E-mail" />
+              <InputField type="email" placeholder="E-mail" {...register("email")}/>
             </InputRoot>
           </div>
 
