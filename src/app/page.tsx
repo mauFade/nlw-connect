@@ -1,18 +1,33 @@
+"use client";
+
 import Button from "@/components/button";
 import { InputField, InputIcon, InputRoot } from "@/components/input";
-import {zodResolver} from "@hookform/resolvers/zod"
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, Mail, Radio, User } from "lucide-react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-import {z} from "zod"
+import { string, z } from "zod";
 import logo from "../assets/logo.svg";
 
+const subscriptionSchema = z.object({
+  name: string().min(3, "Digite um nome válido"),
+  email: string().email("Digite um e-mail válido"),
+});
+
+type SubscriptionSchema = z.infer<typeof subscriptionSchema>;
+
 export default function Home() {
-  const {register, handleSubmit} = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SubscriptionSchema>({
+    resolver: zodResolver(subscriptionSchema),
+  });
 
-  const handleSubscribe(data: any) {
-
-  }
+  const handleSubscribe = (data: SubscriptionSchema) => {
+    console.log(data);
+  };
 
   return (
     <div className="min-h-dvh flex flex-col justify-center gap-16">
@@ -47,27 +62,54 @@ export default function Home() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit(handleSubscribe)} className="bg-gray-700 border border-gray-600 rounded-2xl p-8 space-y-6 w-full md:max-w-[440px]">
+        <form
+          onSubmit={handleSubmit(handleSubscribe)}
+          className="bg-gray-700 border border-gray-600 rounded-2xl p-8 space-y-6 w-full md:max-w-[440px]"
+        >
           <h2 className="font-heading font-semibold text-gray-200 text-xl">
             Inscrição
           </h2>
 
           <div className="space-y-3 ">
-            <InputRoot>
-              <InputIcon>
-                <User />
-              </InputIcon>
+            <div className="space-y-2">
+              <InputRoot>
+                <InputIcon>
+                  <User />
+                </InputIcon>
 
-              <InputField type="text" placeholder="Nome completo" {...register("name")}/>
-            </InputRoot>
+                <InputField
+                  type="text"
+                  placeholder="Nome completo"
+                  {...register("name")}
+                />
+              </InputRoot>
 
-            <InputRoot>
-              <InputIcon>
-                <Mail />
-              </InputIcon>
+              {errors.name && (
+                <p className="text-danger font-semibold text-sm">
+                  {errors.name.message}
+                </p>
+              )}
+            </div>
 
-              <InputField type="email" placeholder="E-mail" {...register("email")}/>
-            </InputRoot>
+            <div className="space-y-2">
+              <InputRoot>
+                <InputIcon>
+                  <Mail />
+                </InputIcon>
+
+                <InputField
+                  type="email"
+                  placeholder="E-mail"
+                  {...register("email")}
+                />
+              </InputRoot>
+
+              {errors.email && (
+                <p className="text-danger font-semibold text-sm">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
           </div>
 
           <Button type="submit">
